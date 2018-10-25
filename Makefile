@@ -255,6 +255,14 @@ else ifneq (,$(findstring armv,$(platform)))
 	endif
 	PLATFORM_DEFINES += -DARM
 
+else ifeq ($(platform), pocketchip)
+	TARGET := $(TARGET_NAME)_libretro.so
+	fpic := -fPIC
+	SHARED := -shared -Wl,-version-script=link.T -Wl,-no-undefined
+	PLATFORM_DEFINES += -DARM
+	PLATFORM_DEFINES += -marm -mcpu=cortex-a8
+	PLATFORM_DEFINES += -mfloat-abi=hard -mfpu=neon
+
 else ifeq ($(platform), emscripten)
 	TARGET := $(TARGET_NAME)_libretro_$(platform).bc
 	STATIC_LINKING = 1
